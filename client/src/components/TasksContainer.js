@@ -7,10 +7,9 @@ const TasksContainer = ({ socket }) => {
 
   useEffect(() => {
     function fetchTasks() {
-      fetch('http://localhost:4000/api')
+      fetch(process.env.REACT_APP_API_URL + '/api')
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setTasks(data);
         });
     }

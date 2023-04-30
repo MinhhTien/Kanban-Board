@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import socketIO from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 
-const socket = socketIO.connect('http://localhost:4000');
-
-const Comments = () => {
+const Comments = ({ socket }) => {
   const { category, id } = useParams();
   const [comment, setComment] = useState('');
   const [commentList, setCommentList] = useState([]);
@@ -12,11 +9,11 @@ const Comments = () => {
   //👇🏻 Listens to the comments event
   useEffect(() => {
     socket.on('comments', (data) => setCommentList(data));
-  }, []);
+  }, [socket]);
 
   useEffect(() => {
     socket.emit('fetchComments', { category, id });
-  }, [category, id]);
+  }, [category, id, socket]);
 
   const addComment = (e) => {
     e.preventDefault();

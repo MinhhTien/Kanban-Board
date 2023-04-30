@@ -1,15 +1,16 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 const http = require('http').Server(app);
 const cors = require('cors');
 const { Novu } = require('@novu/node')
-const novu = new Novu("b4f5fc03849f7805103a1013ca4b080c")
+const novu = new Novu(process.env.NOVU_API_KEY)
 
 const socketIO = require('socket.io')(http, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URI || '*',
   },
 });
 
@@ -64,9 +65,9 @@ let tasks = {
 const sendNotification = async (user) => {
   console.log(`⚡: Send notification to ${user}!`);
   try {
-      const result = await novu.trigger("novu-notification", {
+      const result = await novu.trigger(process.env.NOVU_TEMPLATE_ID, {
           to: {
-              subscriberId: "644e2a2c9c851c56f8fb5cb5",
+              subscriberId: process.env.NOVU_SUBSCRIBER_ID,
           },
           payload: {
               userId: user,

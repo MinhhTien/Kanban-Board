@@ -17,8 +17,8 @@ const Nav = () => {
       <h3>Team's todo list</h3>
       <div>
         <NovuProvider
-          subscriberId="644e2a2c9c851c56f8fb5cb5"
-          applicationIdentifier="3_kiQkTkOmVu"
+          subscriberId={process.env.REACT_APP_SUBSCRIBER_ID}
+          applicationIdentifier={process.env.REACT_APP_APPLICATION_IDENTIFIER}
         >
           <PopoverNotificationCenter
             onNotificationClick={onNotificationClick}
